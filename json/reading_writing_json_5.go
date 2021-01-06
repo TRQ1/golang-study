@@ -1,10 +1,10 @@
 package main
 
 import (
-	"bytes"
-	"encoding/json"
-	"net/http"
-	"testing"
+		"encoding/json"
+		"fmt"
+		"log"
+		"net/http"
 )
 
 type helloWorldResponse struct {
@@ -35,7 +35,7 @@ func helloWorldHandler(w http.ResponseWriter, r *http.Request) {
 
 		err := decoder.Decode(&request)
 		if err != nil {
-				http.Error(w, "Bad request", htpp.StatusBadRequest)
+				http.Error(w, "Bad request", http.StatusBadRequest)
 		}
 
 		response := helloWorldResponse{Message: "Hello" + request.Name}
