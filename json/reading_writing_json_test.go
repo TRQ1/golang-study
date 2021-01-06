@@ -1,29 +1,50 @@
 package main
 
 import (
-	"bytes"
+	"fmt"
 	"encoding/json"
-	"net/http"
+	"io/ioutil"
 	"testing"
 )
 
-func BenchmarkHelloHandler(b *testing.B) {
-	b.ResetTimer()
-
-	for i :=0; i < b.N; i++ {
-			r, _ := http.Post(
-					"http://localhost:8080/hellowrld",
-					"application/json",
-					bytes.NewBuffer([]byte(`{"Name":"World"`)),
-			)
-
-			var response helloWorldResponse
-			decoder := json.NewDecoder(r.Body)
-
-			_ = decoder.Decode(&response)
-	}
+type Response struct {
+	Message string 
 }
 
-func init() {
-		go server()
+
+func BenchmarkHelloHandlerVariable(b *testing.B) {
+		b.ResetTimer()
+
+		var writer = ioutil.Discard
+		response := Response{Message: "Hello World"}
+
+		for i := 0; i < b.N; i++ {
+				data, _ := json.Marshal(response)
+				fmt.Fprint(writer, string(data))
+		}
+}
+
+
+func BenchmarkHelloHandlerEncoder(b *testing.B) {
+		b.ResetTimer()
+
+		var writer = ioutil.Discard
+		response := Response{Message: "Hello World"}
+
+		for i := 0; i < b.N; i++ {
+				encoder := json.NewEncoder(writer)
+				encoder.Encode(response)
+		}
+}
+
+func BenchmarkHelloHandlerReserence(b *testing.B) {
+		b.ResetTimer()
+
+		var writer = ioutil.Discard
+		response := Response{Message: "Hello World"}
+
+		for i := 0; i < b.N; i++ {
+				encoder := json.NewEncoder(writer)
+				encoder.Encode(response)
+		}
 }
