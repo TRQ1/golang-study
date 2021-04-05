@@ -33,5 +33,5 @@ func TestSortNumberTest(t *testing.T) {
 
 func TestDuplicatedNumber(t *testing.T) {
 	p := IsVaildLottery(1, 2, 2, 4, 5, 6)
-	assert.True(t, p, "It is the sort the numbes in ascending order but duplication")
+	assert.False(t, p, "It is the sort the numbes in ascending order but not duplication")
 }
