@@ -1,8 +1,8 @@
 package main
 
 
-func IsVaildLottery(numbers ...int) bool {
-	if !IsVaildLength(numbers...) || !IsVaildRange(numbers...) || !IsAscOrder(numbers...) {
+func IsValidLottery(numbers ...int) bool {
+	if !IsValidLength(numbers...) || !IsValidRange(numbers...) || !IsAscOrder(numbers...) {
 		return false
 	}
 
@@ -20,7 +20,7 @@ func IsAscOrder(numbers ...int) bool {
   	return true
 }
 
-func IsVaildRange(numbers ...int) bool {
+func IsValidRange(numbers ...int) bool {
  	for _, n := range numbers {
 		 if n < 1 || n > 45 {
 			 return false
@@ -29,6 +29,6 @@ func IsVaildRange(numbers ...int) bool {
   	return true
 }
 
-func IsVaildLength(numbers ...int) bool {
+func IsValidLength(numbers ...int) bool {
 	return len(numbers) == 6
 }
